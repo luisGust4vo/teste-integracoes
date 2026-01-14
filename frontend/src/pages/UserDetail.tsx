@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { getUserById } from "../api/userService";
 import { getEnrichedUser } from "../api/enrichmentService";
-import { User, EnrichedUser } from "../types/user";
+import type { User, EnrichedUser } from "../types/user";
 
 export default function UserDetail() {
   const { id } = useParams();

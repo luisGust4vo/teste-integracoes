@@ -1,6 +1,6 @@
 const API_A = import.meta.env.VITE_API_A_URL;
 
-import { User, CreateUserDTO } from "../types/user";
+import type { User, CreateUserDTO } from "../types/user";
 
 export async function getUsers(): Promise<User[]> {
   const res = await fetch(`${API_A}/users`);

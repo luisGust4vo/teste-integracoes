@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { getUsers } from "../api/userService";
-import { User } from "../types/user";
+import type { User } from "../types/user";
 import { useNavigate } from "react-router-dom";
 
 export default function UserList() {

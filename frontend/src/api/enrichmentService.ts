@@ -1,4 +1,4 @@
-import { EnrichedUser } from "../types/user";
+import type { EnrichedUser } from "../types/user";
 
 const API_B = import.meta.env.VITE_API_B_URL;
 
