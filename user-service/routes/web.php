@@ -6,7 +6,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-// routes/api.php
 Route::post('/users', [UserController::class, 'store']);
 Route::get('/users', [UserController::class, 'index']);
 Route::get('/users/{id}', [UserController::class, 'show']);
