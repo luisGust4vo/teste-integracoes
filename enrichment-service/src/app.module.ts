@@ -7,7 +7,7 @@ import { RabbitMQModule } from './rabbitmq/rabbitmq.module';
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
-    MongooseModule.forRoot(process.env.MONGO_URI),
+    MongooseModule.forRoot(process.env.MONGO_URI || 'mongodb://localhost:27017/enrichment'),
     RabbitMQModule,
     UsersModule,
   ],

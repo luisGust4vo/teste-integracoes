@@ -1,32 +1,33 @@
-version: "3.9"
+version: '3.8'
 
 services:
-  enrichment:
+  enrichment-service:
     build: .
-    container_name: enrichment_service
     ports:
       - "3001:3001"
-    env_file:
-      - .env
+    environment:
+      - PORT=3001
+      - MONGO_URI=mongodb://mongodb:27017/enrichment
+      - RABBITMQ_URL=amqp://host.docker.internal:5672
     depends_on:
-      - mongo
-      - rabbitmq
+      - mongodb
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
     networks:
       - app-network
 
-  mongo:
+  mongodb:
     image: mongo:7
-    container_name: enrichment_mongo
     ports:
       - "27017:27017"
     volumes:
-      - mongo_data:/data/db
+      - mongodb_data:/data/db
     networks:
       - app-network
 
 volumes:
-  mongo_data:
+  mongodb_data:
 
 networks:
   app-network:
-    external: true
+    driver: bridge
