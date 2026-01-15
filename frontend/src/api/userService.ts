@@ -1,4 +1,4 @@
-const API_A = import.meta.env.VITE_API_A_URL;
+const API_A = import.meta.env.VITE_API_A_URL || 'http://localhost:8000/api';
 
 import type { User, CreateUserDTO } from "../types/user";
 

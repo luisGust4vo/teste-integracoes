@@ -37,9 +37,11 @@ class UserController extends Controller
 
         } catch (\Throwable $e) {
             DB::rollBack();
+            \Log::error('Erro ao criar usuário: ' . $e->getMessage());
 
             return response()->json([
-                'message' => 'Erro ao criar usuário'
+                'message' => 'Erro ao criar usuário',
+                'error' => $e->getMessage()
             ], 500);
         }
     }

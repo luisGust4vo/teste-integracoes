@@ -1,6 +1,6 @@
 import type { EnrichedUser } from "../types/user";
 
-const API_B = import.meta.env.VITE_API_B_URL;
+const API_B = import.meta.env.VITE_API_B_URL || 'http://localhost:3001';
 
 export async function getEnrichedUser(uuid: string): Promise<EnrichedUser> {
   const res = await fetch(`${API_B}/users/enriched/${uuid}`);

@@ -69,8 +69,8 @@ services:
     ports:
       - "5173:5173"
     environment:
-      - VITE_USER_SERVICE_URL=http://localhost:8000
-      - VITE_ENRICHMENT_SERVICE_URL=http://localhost:3001
+      - VITE_API_A_URL=http://localhost:8000/api
+      - VITE_API_B_URL=http://localhost:3001
     depends_on:
       - user-service
       - enrichment-service
