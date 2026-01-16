@@ -1,8 +1,5 @@
-# Sistema de Gerenciamento de Usuários com Enriquecimento de Dados
 
-Sistema completo de gerenciamento de usuários com arquitetura de microsserviços, comunicação assíncrona via fila de mensagens e enriquecimento de dados.
-
-## 🏗️ Arquitetura
+## Arquitetura
 
 - **Frontend**: React + TypeScript + Vite
 - **User Service**: PHP (Laravel) + PostgreSQL
@@ -10,12 +7,12 @@ Sistema completo de gerenciamento de usuários com arquitetura de microsserviço
 - **Message Queue**: RabbitMQ
 - **Containerização**: Docker + Docker Compose
 
-## 📋 Pré-requisitos
+##  Pré-requisitos
 
 - Docker
 - Docker Compose
 
-## 🚀 Como Executar
+##  Como Executar
 
 ### Subir toda a aplicação
 
@@ -47,7 +44,7 @@ docker-compose down
 docker-compose down -v
 ```
 
-## 📡 Endpoints da API
+## Endpoints da API
 
 ### User Service (PHP/Laravel)
 
@@ -125,7 +122,7 @@ Busca dados enriquecidos de um usuário.
 }
 ```
 
-## 🔄 Fluxo de Dados
+## Fluxo de Dados
 
 1. **Criação de Usuário**: Frontend envia POST para User Service
 2. **Persistência**: User Service salva no PostgreSQL e gera UUID
@@ -135,7 +132,7 @@ Busca dados enriquecidos de um usuário.
 6. **Persistência**: Enrichment Service salva no MongoDB
 7. **Consulta**: Frontend busca dados do User Service e Enrichment Service
 
-## 🛡️ Tratamento de Erros
+##  Tratamento de Erros
 
 ### User Service
 - Validação de campos obrigatórios (name mínimo 3 caracteres, email válido)
@@ -147,28 +144,12 @@ Busca dados enriquecidos de um usuário.
 - **Dead Letter Queue**: Configurável para mensagens que falharam múltiplas vezes
 - **Logging**: Todas as operações são logadas para debugging
 
-## 🗂️ Estrutura do Projeto
 
-```
-.
-├── docker-compose.yml          # Orquestração de todos os serviços
-├── frontend/                   # Aplicação React
-├── user-service/              # API PHP/Laravel
-│   ├── app/
-│   ├── database/migrations/
-│   └── routes/api.php
-└── enrichment-service/        # API Node.js/NestJS
-    ├── src/
-    │   ├── users/
-    │   └── rabbitmq/
-    └── Dockerfile
-```
-
-## 🔧 Variáveis de Ambiente
+##  Variáveis de Ambiente
 
 Cada serviço possui seu arquivo `.env.example` com as variáveis necessárias.
 
-## 📝 Notas Técnicas
+##  Notas Técnicas
 
 - **Migrations**: O User Service executa migrations automaticamente ao iniciar
 - **UUID v4**: Utilizado como identificador universal entre serviços
