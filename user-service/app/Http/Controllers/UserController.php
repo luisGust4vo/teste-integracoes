@@ -12,10 +12,26 @@ class UserController extends Controller
 {
     public function store(Request $request, RabbitMQService $rabbit)
     {
-        $validated = $request->validate([
-            'name' => 'required|min:3',
-            'email' => 'required|email|unique:users,email',
-        ]);
+        try {
+            $validated = $request->validate(
+                [
+                    'name' => 'required|min:3',
+                    'email' => 'required|email|unique:users,email',
+                ],
+                [
+                    'name.required' => 'O campo nome é obrigatório',
+                    'name.min' => 'O nome deve ter no mínimo 3 caracteres',
+                    'email.required' => 'O campo email é obrigatório',
+                    'email.email' => 'O email deve ser válido',
+                    'email.unique' => 'Este email já está cadastrado',
+                ]
+            );
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            return response()->json([
+                'message' => 'Erro de validação',
+                'errors' => $e->errors()
+            ], 400);
+        }
 
         DB::beginTransaction();
 
@@ -54,6 +70,10 @@ class UserController extends Controller
 
     public function show($id)
     {
+        if (!is_numeric($id) || $id <= 0) {
+            return response()->json(['message' => 'Invalid user ID'], 400);
+        }
+
         $user = User::find($id);
 
         if (!$user) {

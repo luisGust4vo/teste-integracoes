@@ -12,6 +12,7 @@ export default function UserDetail() {
   const [enriched, setEnriched] = useState<EnrichedUser | null>(null);
   const [loadingUser, setLoadingUser] = useState(true);
   const [loadingEnriched, setLoadingEnriched] = useState(true);
+  const [error, setError] = useState("");
 
   useEffect(() => {
     if (!id) return;
@@ -23,11 +24,17 @@ export default function UserDetail() {
         return getEnrichedUser(user.uuid);
       })
       .then(setEnriched)
-      .catch(() => setEnriched(null))
+      .catch((err) => {
+        if (!user) {
+          setError(err.message);
+        }
+        setEnriched(null);
+      })
       .finally(() => setLoadingEnriched(false));
   }, [id]);
 
   if (loadingUser) return <div className="container"><p className="loading">Carregando usuário...</p></div>;
+  if (error) return <div className="container"><p className="error">{error}</p></div>;
   if (!user) return <div className="container"><p className="error">Usuário não encontrado</p></div>;
 
   return (

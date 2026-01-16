@@ -23,8 +23,9 @@ export async function createUser(data: CreateUserDTO): Promise<User> {
 
   if (!res.ok) {
     const error = await res.json();
-    if (error.errors?.email) {
-      throw new Error(error.errors.email[0]);
+    if (error.errors) {
+      const firstError = Object.values(error.errors)[0] as string[];
+      throw new Error(firstError[0]);
     }
     throw new Error(error.message || "Erro ao criar usuário");
   }

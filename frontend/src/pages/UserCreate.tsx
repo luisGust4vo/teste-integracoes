@@ -9,12 +9,34 @@ export default function UserCreate() {
   const [message, setMessage] = useState("");
   const [isError, setIsError] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [errors, setErrors] = useState({ name: "", email: "" });
   const navigate = useNavigate();
+
+  function validateForm() {
+    const newErrors = { name: "", email: "" };
+    let isValid = true;
+
+    if (name.trim().length < 3) {
+      newErrors.name = "O nome deve ter no mínimo 3 caracteres";
+      isValid = false;
+    }
+
+    if (!email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) {
+      newErrors.email = "Digite um email válido";
+      isValid = false;
+    }
+
+    setErrors(newErrors);
+    return isValid;
+  }
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    setLoading(true);
     setMessage("");
+    
+    if (!validateForm()) return;
+    
+    setLoading(true);
     
     try {
       await createUser({ name, email });
@@ -39,12 +61,13 @@ export default function UserCreate() {
             <label>Nome</label>
             <input
               type="text"
-              placeholder="Digite o nome"
+              placeholder="Digite o nome (mínimo 3 caracteres)"
               value={name}
               onChange={e => setName(e.target.value)}
               required
               minLength={3}
             />
+            {errors.name && <span className="error-text">{errors.name}</span>}
           </div>
 
           <div className="form-group">
@@ -56,6 +79,7 @@ export default function UserCreate() {
               onChange={e => setEmail(e.target.value)}
               required
             />
+            {errors.email && <span className="error-text">{errors.email}</span>}
           </div>
 
           <div className="button-group">

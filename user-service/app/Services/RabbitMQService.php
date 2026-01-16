@@ -54,6 +54,11 @@ class RabbitMQService
 
     public function publish(array $payload): void
     {
+        if (empty($payload['uuid']) || empty($payload['name'])) {
+            \Log::error('Invalid payload for RabbitMQ: missing uuid or name');
+            throw new \InvalidArgumentException('Payload must contain uuid and name');
+        }
+
         $message = new AMQPMessage(
             json_encode($payload),
             [
@@ -62,11 +67,17 @@ class RabbitMQService
             ]
         );
 
-        $this->channel->basic_publish(
-            $message,
-            config('rabbitmq.exchange'),
-            config('rabbitmq.routing_key')
-        );
+        try {
+            $this->channel->basic_publish(
+                $message,
+                config('rabbitmq.exchange'),
+                config('rabbitmq.routing_key')
+            );
+            \Log::info('Message published to RabbitMQ', ['uuid' => $payload['uuid']]);
+        } catch (\Exception $e) {
+            \Log::error('Failed to publish message to RabbitMQ: ' . $e->getMessage());
+            throw $e;
+        }
     }
 
     public function __destruct()
