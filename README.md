@@ -149,9 +149,3 @@ Busca dados enriquecidos de um usuário.
 
 Cada serviço possui seu arquivo `.env.example` com as variáveis necessárias.
 
-##  Notas Técnicas
-
-- **Migrations**: O User Service executa migrations automaticamente ao iniciar
-- **UUID v4**: Utilizado como identificador universal entre serviços
-- **CORS**: Habilitado em ambos os serviços para comunicação com o frontend
-- **Normalização**: Nomes de usuário são normalizados (lowercase, sem espaços) para gerar links sociais
